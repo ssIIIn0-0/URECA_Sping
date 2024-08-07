@@ -1,8 +1,12 @@
 package com.mycom.myapp.controller;
 
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.mycom.myapp.dto.CarDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 // parameter <= request.getParameter("bookId")
@@ -30,7 +34,7 @@ public class ParamController {
 	// bookId != book 이므로 book -> null 로 바꾸려고 하는데 primitive type 이므로 null X ->
 	// warapper class 로 변경해라 가이드
 	@GetMapping("/param4")
-	public void m4(Integer book) { // int book != bookId, int => Integer
+	public void m4(int book) { // int book != bookId, int => Integer
 		System.out.println(book);
 	}
 
@@ -58,4 +62,43 @@ public class ParamController {
 	public void m8(@RequestParam(required = false) String seq) {
 		System.out.println(seq);
 	}
+
+	// parameter => dto mapping
+	// primitive type field 가 누락되어도 0 등 초기화된다. (오류 X)
+	@PostMapping("/car")
+	public void m9(CarDto carDto) {
+		System.out.println(carDto);
+	}
+
+	// CarDto 의 모든 생성자 삭제 => 결과적으로 기본 생성자만 있는 경우 (O)
+	// CarDto 의 setter, getter 삭제 => CarDto [name=null, price=0, brand=null]
+	// CarDto 의 getter 만 삭제 => (O) <= setter 이용 값 설정
+	// CarDto 의 field name => name2 => (O) <= field name 보다 setter, getter 이름 기인
+	// CarDto 의 field name 의 setName(), getName() => setName2(), getName2() 변경하면
+	// name 필드 null
+	@PostMapping("/car2")
+	public void m10(CarDto carDto) {
+		System.out.println(carDto);
+	}
+
+	// 클라이언트 -> 서버로 복수의 parameter 를 보내는 경우이나 Dto 로 표현하지 않은 것들
+	// @RequestParam 필요
+	@PostMapping("/map")
+	public void m11(@RequestParam Map<String, String> params) {
+		System.out.println(params.get("name"));
+		System.out.println(params.get("price"));
+		System.out.println(params.get("brand"));
+		System.out.println(params.get("tire"));
+	}
+
+	@GetMapping("/header")
+	public void m12(@RequestHeader(value = "Accept") String accept, @RequestHeader(value = "Host") String host,
+			@RequestHeader(value = "API-KEY") String apiKey // user defined header
+	) {
+		System.out.println(accept);
+		System.out.println(host);
+		System.out.println(apiKey);
+
+	}
+
 }
