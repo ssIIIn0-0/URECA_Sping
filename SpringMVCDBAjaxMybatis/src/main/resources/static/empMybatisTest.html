@@ -1,0 +1,134 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Emp Mybatis Test</title>
+</head>
+<body>
+
+	<h1>Emp Mybatis Test</h1>
+	<button id="btnListEmpLike">Emp List Like</button>
+	<button id="btnListEmpResultMap">Emp List ResultMap</button>
+	<button id="btnListEmpResultMap2">Emp List ResultMap2</button>
+	<button id="btnListEmpParameterMap">Emp List Parameter Map</button>
+	<button id="btnListEmpParameterMap2">Emp List Parameter Map2</button>
+	<button id="btnListEmpParameterMap3">Emp List Parameter Map3</button>
+	<button id="btnListEmpWhereIf">Emp List WhereIf</button>
+	
+<script>
+
+// boot 3.x url 마지막에 / 제외해야!!!
+
+window.onload = function(){
+
+
+	// MyBatis 연습용
+	// html 문서이므로 backtick 사용
+	document.querySelector("#btnListEmpLike").onclick = async function(){
+		let searchWord = 'ee';
+		let url = '/listEmpLike';
+		let urlParams = `?searchWord=${searchWord}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+		
+	document.querySelector("#btnListEmpResultMap").onclick = async function(){
+		let searchWord = 'ng';
+		let url = '/listEmpResultMap'; // EmpDto - resultMap
+		let urlParams = `?searchWord=${searchWord}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+	
+	document.querySelector("#btnListEmpResultMap2").onclick = async function(){
+		let searchWord = 'hong';
+		let url = '/listEmpResultMap2'; // EmpDto2 - resultMap2
+		let urlParams = `?searchWord=${searchWord}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+	
+	document.querySelector("#btnListEmpParameterMap").onclick = async function(){
+		let firstName = '길동';
+		let lastName = '홍';
+		let url = '/listEmpParameterMap';
+		let urlParams = `?firstName=${firstName}&lastName=${lastName}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+
+	document.querySelector("#btnListEmpParameterMap2").onclick = async function(){
+		let firstName = '길동';
+		let lastName = '홍';
+		let url = '/listEmpParameterMap2';
+		let urlParams = `?firstName=${firstName}&lastName=${lastName}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+	
+	document.querySelector("#btnListEmpParameterMap3").onclick = async function(){
+		let firstName = '길동';
+		let lastName = '홍';
+		let url = '/listEmpParameterMap3';
+		let urlParams = `?firstName=${firstName}&lastName=${lastName}`;
+		
+  		try{
+			let response = await fetch(url + urlParams)
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}
+
+	document.querySelector("#btnListEmpWhereIf").onclick = async function(){
+		let firstName = '길동';
+		let lastName = '삼';
+		let email = 'sam@gildong.com';
+		
+		let url = '/listEmpWhereIf';
+		//let urlParams = `?lastName=${lastName}`;
+		let urlParams = `?firstName=${firstName}&email=${email}`;
+		//let urlParams = `?firstName=${firstName}`;
+		//let urlParams = `?firstName=${firstName}&lastName=${lastName}`;
+  		try{
+			let response = await fetch(url + urlParams);
+			let data = await response.json();
+			console.log(data);
+		}catch(error){
+			console.error(error);
+		}
+  	}  	
+};
+</script>
+</body>
+</html>

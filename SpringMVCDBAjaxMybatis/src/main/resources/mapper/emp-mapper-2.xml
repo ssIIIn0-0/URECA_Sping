@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.myapp.emp.dao.EmpDao">
+
+	
+	<select id="listEmpLike" resultType="com.mycom.myapp.emp.dto.EmpDto" parameterType="string">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 where email like  concat( '%', #{searchWord}, '%')
+	</select>
+	
+	<!-- 1. resultType 간소화, 2. column 과 property 불일치 해소 -->
+	<resultMap id="empMap" type="com.mycom.myapp.emp.dto.EmpDto">
+		<result property="employeeId" column="employeeId"></result>
+		<result property="firstName" column="first_name"></result>
+		<result property="lastName" column="last_name"></result>
+		<result property="email" column="email"></result>
+		<result property="hireDate" column="hiredate"></result>
+	</resultMap>
+
+	<select id="listEmpResultMap" resultMap="empMap" parameterType="string">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 where email like  concat( '%', #{searchWord}, '%')
+	</select>
+
+	<!-- another map -->
+	<resultMap id="empMap2" type="com.mycom.myapp.emp.dto.EmpDto">
+		<result property="employeeId" column="employeeId"></result>
+		<result property="firstName" column="first_name"></result>
+		<result property="lastName" column="last_name"></result>
+	</resultMap>
+	
+	<select id="listEmpResultMap2" resultMap="empMap2" parameterType="string">
+		select employeeId, first_name, last_name
+		  from emp
+		 where email like  concat( '%', #{searchWord}, '%')
+	</select>	
+	
+	<!-- parameter map -->
+	<select id="listEmpParameterMap" resultMap="empMap" parameterType="map">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	<select id="listEmpParameterMap2" resultMap="empMap" parameterType="map">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	<select id="listEmpParameterMap3" resultMap="empMap" parameterType="map">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	<!--  동적 sql where / if -->
+	<!-- firstName, lastName, email -->
+	<select id="listEmpWhereIf" resultMap="empMap" parameterType="map">
+		select employeeId, first_name, last_name, email, hiredate hireDate
+		  from emp
+		 <where>
+		 	<if test="firstName != null">
+		 		first_name = #{firstName}
+		 	</if>
+		 	<if test="lastName != null">
+		 		and last_name = #{lastName}
+		 	</if>
+		 	<if test="email != null">
+		 		and email = #{email}
+		 	</if>
+		 </where>
+	</select>
+	
+	
+	
+</mapper>    
